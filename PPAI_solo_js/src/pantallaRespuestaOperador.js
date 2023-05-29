@@ -1,6 +1,7 @@
 class PantallaRespuestaOperador {
-  constructor() { }
-
+  constructor(gestor) {
+    this.gestor = gestor
+   }
 
   mostrarDatosLlamada(nombre, datos) {
     const tabla = document.getElementById("contTabla")
@@ -30,26 +31,21 @@ class PantallaRespuestaOperador {
     tabla.appendChild(element);
   }
 
-  mostrarValidaciones(validaciones) {
-    for (var i = 0; i < validaciones.length; i++) {
-      this.mostrarValidacion(validaciones[i], (i + 1))
-    }
-  }
-
   mostrarValidacion(validacion, num) {
     const seccion_val = document.getElementById(`seccion_val` + num);
     let opcionesHTML = '';
 
-    for (var i = 0; i < validacion.opcionesValidacion.length; i++) {
+    for (var i = 0; i < validacion.opciones.length; i++) {
       opcionesHTML += `
         <div class="form-group">
-          <input class="form-check-input" type="radio" name="opcion${num}" id="opcion${i + 1}" value="${validacion.opcionesValidacion[i].descripcion}">
+          <input class="form-check-input" type="radio" name="opcion${num}" id="opcion${i + 1}" value="${validacion.opciones[i].descripcion}">
           <label class="form-check-label" for="opcion1">
-            ${validacion.opcionesValidacion[i].descripcion}
+            ${validacion.opciones[i].descripcion}
           </label>
         </div>
       `;
     }
+    
 
     const element = document.createElement("div");
     element.innerHTML = `
@@ -83,7 +79,11 @@ class PantallaRespuestaOperador {
     }
   }
 
-  tomarSeleccionOpcion(validacion, opcion, vector, gestor) {
+  solicitarSeleccionOpcion(validacion, opcion, gestor){
+    this.tomarSeleccionOpcion(validacion, opcion, gestor)
+  }
+
+  tomarSeleccionOpcion(validacion, opcion, gestor) {
     document.getElementById(validacion)
       .addEventListener('submit', function (event) {
         event.preventDefault(); // Evita que se envíe el formulario por defecto
@@ -97,7 +97,7 @@ class PantallaRespuestaOperador {
           }
         }
 
-        if (opcionSeleccionada === gestor.verificarSeleccionOpcion(vector)) {
+        if (gestor.verificarSeleccionOpcion(validacion, opcionSeleccionada)) {
           alert('La opcion seleccionada es correcta.');
         } else {
           alert('La opcion seleccionada es incorrecta.');
@@ -105,14 +105,38 @@ class PantallaRespuestaOperador {
       });
   }
 
-  tomarDescripcionOperador(llamada) {
+  solicitarDescripcionOperador() {
+    this.tomarDescripcionOperador(this.gestor)
+  }
+
+  tomarDescripcionOperador(gestor) {
     document.getElementById('campo-respuesta').addEventListener('submit', function (event) {
       event.preventDefault();
       const rta_str = document.getElementById('respuesta').value;
-      llamada.setDescripcionOperador(rta_str)
+      gestor.tomarDescripcionOperador(rta_str)
       alert('La descripcion se asigno correctamente.')
     })
   }
+
+  solicitarConfirmacionOperacion() {
+    this.tomarConfirmacionOperacion(this.gestor)
+  }
+
+  tomarConfirmacionOperacion(gestor) {
+    document.getElementById('campo-respuesta').addEventListener('submit', function (event) {
+      event.preventDefault();
+      alert('Presione OK para confirmar.')
+      gestor.tomarConfirmacionOperacion()
+    })
+  }
+
+  informarExitoRegistroAccion() {
+    document.getElementById('campo-respuesta').addEventListener('submit', function (event) {
+      event.preventDefault();
+      alert('El registro se realizo con exito.')
+    })
+  }
+
 
   cancelar() {
     document.getElementById('cancelar').addEventListener('click', function (event) {

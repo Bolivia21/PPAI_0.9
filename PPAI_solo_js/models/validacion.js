@@ -21,7 +21,12 @@ export default class Validacion{
         
         return datosValidacion
     }
-    esCorrecta(seleccionOpcion){
-        return seleccionOpcion.esCorrecta()
+    esOpcionCorrecta(seleccionOpcion){
+        const opcion = this.opcionesValidacion.map((op) => {
+            if (op.descripcion == seleccionOpcion) {
+                return op
+            }
+        })
+        return opcion.esCorrecta()
 }
 }

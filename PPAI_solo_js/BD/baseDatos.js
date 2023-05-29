@@ -7,6 +7,7 @@ import OpcionValidacion from "../models/opcionValidacion.js";
 //import PantallaRespuestaOperador from "../models/pantallaRespuestaOperador.js";
 import Estado from "../models/estado.js";
 import CambioEstado from "../models/cambioEstado.js";
+import PantallaRespuestaOperador from "../src/pantallaRespuestaOperador.js";
 
 //onst pantallaOperador = new PantallaRespuestaOperador()
 
@@ -14,8 +15,9 @@ const estado1 = new Estado("Iniciada")
 const estado2 = new Estado("EnCurso")
 const estado3 = new Estado("Finalizada")
 const estados = [estado1, estado2, estado3]
+export default estados;
 
-const cambioEstado1 = new CambioEstado("9:17:44", estado1)
+const cambioEstado1 = new CambioEstado(new Date(2023, 4, 29, 17, 23), estado1)
 const opcion1_val1 = new OpcionValidacion(false, "Tobi")
 const opcion2_val1 = new OpcionValidacion(true, "Blocky")
 const opcion3_val1 = new OpcionValidacion(false, "Floppy")
@@ -46,7 +48,9 @@ const subOpcion_selecc = new subOpcionLlamada("SubOpcion 3", "5", validaciones)
 const cliente_llamada = new Cliente("20255987", "Juan Perez", "3518888888")
 
 
-const llamada_actual = new Llamada(null, null, null, null, null, cliente_llamada,subOpcion_selecc,"Opcion 1" , "Categoria 3")
+const llamada_actual = new Llamada(null, null, cliente_llamada,subOpcion_selecc, "Opcion 1", [cambioEstado1], "Categoria 3")
+
+const pantalla = new PantallaRespuestaOperador()
 
 const gestor = new GestorRespuestaOperador(llamada_actual)
 

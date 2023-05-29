@@ -4,7 +4,7 @@ export default class CambioEstado {
         this.estado = estado
     }
     esIniciada(){
-        return this.estado === "iniciada"
+        return this.estado.nombre === "Iniciada"
     }
     
     getFechaHoraInicio(){
