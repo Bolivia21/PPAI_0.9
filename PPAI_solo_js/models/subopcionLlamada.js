@@ -1,6 +1,6 @@
 import Validacion from "./validacion.js"
 
-export class subOpcionLlamada{
+export default class subOpcionLlamada{
     constructor(nombre, nroOrden,validacionesRequeridas){//validaciones requeridas tiene que ser un array de validaciones, cada una con los datos propios
         this.nombre = nombre;
         this.nroOrden = nroOrden;

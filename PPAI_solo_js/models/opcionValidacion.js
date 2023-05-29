@@ -1,4 +1,4 @@
-export class OpcionValidacion{
+export default class OpcionValidacion{
     constructor(correcta, descripcion){
         this.correcta = correcta;
         this.descripcion = descripcion;

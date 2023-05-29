@@ -1,11 +1,7 @@
-/*import { actualizarEstado, getDatosLlamada, setDescripcionOperador, setDuracion } from "./llamada.js";
-import { mostrarPantalla,
-    solicitarDescripcionOperador,
-    solicitarAccionRequerida,
-    solicitarConfirmacionOperador,
-    informarExitoRegistroAccion } from "./pantallarespuestaoperador.js";*/
+import Llamada from "../models/llamada.js";
+import Estado from "../models/estado.js";
 
-    export class GestorRespuestaOperador {
+    export default class GestorRespuestaOperador {
         constructor(llamadaActual, categoriaSeleccionada, opcionLlamadaSeleccionada,
             subOpcionSeleccionada){
                 this.llamadaActual = llamadaActual;
@@ -20,7 +16,7 @@ import { mostrarPantalla,
     
         }
     
-        RegistrarRespuestaOperador(){ // En teoria todos los metodos del gestor estan aca adentro en orden de ejecucion
+        RegistrarRespuestaOperador(estados){ // En teoria todos los metodos del gestor estan aca adentro en orden de ejecucion
             pantalla.mostrarPantalla();//le invoco el metodo a la Pantalla
             
             this.buscarEstadoEnCurso(estados);
@@ -28,7 +24,7 @@ import { mostrarPantalla,
     
             this.llamadaActual.actualizarEstado(this.estadoLlamada, this.fechaHoraActual);
     
-            this.validaciones = this.buscarValidaciones();
+            this.validaciones = this.buscarValidaciones(this.llamadaActual);
             this.validaciones = this.ordenarValidaciones(this.validaciones); //chequear que ordene
     
             this.nombreCliente = this.buscarNombreCliente();
@@ -61,8 +57,9 @@ import { mostrarPantalla,
             return fechaActual; //retorno la fecha para ser comparada
         }
     
-        buscarValidaciones(llamada) {
-            return llamada.getValidaciones();
+        buscarValidaciones() {
+            return this.llamadaActual.getValidaciones();
+
         }
     
         ordenarValidaciones(validaciones) {
@@ -78,7 +75,7 @@ import { mostrarPantalla,
         }    
     
         verificarSeleccionOpcion(validacion, seleccionOpcion) { // verificar metodo porque me parece que esta mal
-            if (!llamada.esOpcionCorrecta(validacion, seleccionOpcion)) {
+            if (!this.llamadaActual.esOpcionCorrecta(validacion, seleccionOpcion)) {
                 return 'La opcion no es correcta'
             }
         }

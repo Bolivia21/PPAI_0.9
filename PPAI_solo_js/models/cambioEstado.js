@@ -1,4 +1,4 @@
-export class CambioEstado {
+export default class CambioEstado {
     constructor(fechaHoraInicio, estado){
         this.fechaHoraInicio = fechaHoraInicio;
         this.estado = estado

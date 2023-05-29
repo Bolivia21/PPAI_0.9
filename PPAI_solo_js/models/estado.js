@@ -1,4 +1,4 @@
-class Estado{
+export default class Estado{
     constructor(nombre){
         this.nombre = nombre;
     }

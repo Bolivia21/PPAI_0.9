@@ -1,5 +1,5 @@
-import { getDescripcion } from "./opcionValidacion.js"
-export class Validacion{
+import OpcionValidacion from "./opcionValidacion.js";
+export default class Validacion{
     constructor(audioMensajeValidacion,nombre,nroOrden,opcionesValidacion){
         this.audioMensajeValidacion = audioMensajeValidacion;
         this.nombre = nombre;

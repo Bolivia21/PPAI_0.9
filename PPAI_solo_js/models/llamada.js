@@ -1,18 +1,19 @@
-import { CambioEstado } from "./cambioEstado.js";
-export class Llamada {
+import CambioEstado from "./cambioEstado.js";
+import Cliente from "./cliente.js";
+import subOpcionLlamada from "./subopcionLlamada.js";
+export default class Llamada {
     constructor(descripcionOperador,detalleAccionRequerida,
-        duracion,encuestaEnviada,observacionAuditor,cliente,subOpcion,opcion,cambiosEstados,categoriaSeleccionada){
+        duracion,encuestaEnviada,observacionAuditor,cliente,subOpcion,opcion,categoriaSeleccionada){
             this.descripcionOperador = descripcionOperador;
             this.detalleAccionRequerida = detalleAccionRequerida;
-            this.duracion = duracion;
+            this.duracion = null;
             this.encuestaEnviada = encuestaEnviada;
             this.observacionAuditor = observacionAuditor;
             this.cliente = cliente //cambiar en el diag de clases
             this.subOpcion= subOpcion
             this.opcion= opcion 
-            this.cambiosEstados= cambiosEstados
+            this.cambioEstado= []
             this.categoriaSeleccionada = categoriaSeleccionada
-
         }
 
     actualizarEstado(estado, fechaI){
