@@ -2,17 +2,16 @@ import CambioEstado from "./cambioEstado.js";
 import Cliente from "./cliente.js";
 import subOpcionLlamada from "./subopcionLlamada.js";
 export default class Llamada {
-    constructor(descripcionOperador,detalleAccionRequerida,
-        duracion,encuestaEnviada,observacionAuditor,cliente,subOpcion,opcion,categoriaSeleccionada){
-            this.descripcionOperador = descripcionOperador;
-            this.detalleAccionRequerida = detalleAccionRequerida;
+    constructor(encuestaEnviada,observacionAuditor,cliente,subOpcion,opcion,cambiosEstados,categoriaSeleccionada){
+            this.descripcionOperador = null;
+            this.detalleAccionRequerida = null;
             this.duracion = null;
             this.encuestaEnviada = encuestaEnviada;
             this.observacionAuditor = observacionAuditor;
             this.cliente = cliente //cambiar en el diag de clases
             this.subOpcion= subOpcion
             this.opcion= opcion 
-            this.cambioEstado= []
+            this.cambiosEstados= cambiosEstados
             this.categoriaSeleccionada = categoriaSeleccionada
         }
 
@@ -22,7 +21,7 @@ export default class Llamada {
 
     crearCambioEstado(estado,fechaI){
         const cambioEstado = new CambioEstado(fechaI,estado)
-        this.cambioEstado.push(cambioEstado)
+        this.cambiosEstados.push(cambioEstado)
     }
 
     getEstadoActual(){

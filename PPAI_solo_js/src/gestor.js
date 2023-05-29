@@ -1,23 +1,23 @@
 import Llamada from "../models/llamada.js";
 import Estado from "../models/estado.js";
+import PantallaRespuestaOperador from "./pantallaRespuestaOperador.js";
+import Estado from "../models/estado.js"
+import estados from "../BD/baseDatos.js"
 
     export default class GestorRespuestaOperador {
-        constructor(llamadaActual, categoriaSeleccionada, opcionLlamadaSeleccionada,
-            subOpcionSeleccionada){
+        constructor(llamadaActual){
                 this.llamadaActual = llamadaActual;
-                this.categoriaSeleccionada = categoriaSeleccionada;
-                this.opcionLlamadaSeleccionada = opcionLlamadaSeleccionada;
                 this.nombreCliente = null;
-                this.subOpcionSeleccionada = subOpcionSeleccionada;
                 this.fechaHoraActual = null;
                 this.estadoLlamada = null;
                 this.validaciones = null;
                 this.datosLlamadaAMostrar = null;
+                this.pantalla = null
     
         }
     
         RegistrarRespuestaOperador(estados){ // En teoria todos los metodos del gestor estan aca adentro en orden de ejecucion
-            pantalla.mostrarPantalla();//le invoco el metodo a la Pantalla
+            this.pantalla.mostrarPantalla();//le invoco el metodo a la Pantalla
             
             this.buscarEstadoEnCurso(estados);
             this.getFechaActual();
@@ -30,10 +30,12 @@ import Estado from "../models/estado.js";
             this.nombreCliente = this.buscarNombreCliente();
     
             this.datosLlamadaAMostrar = this.llamadaActual.getDatosLlamada(); //hasta aca controlado perfecto
-    
-            this.mostrarDatosLlamada(this.nombreCliente, this.datosLlamadaAMostrar);            //aca tengo dudas de donde haria el loop de validaciones
-            //aca tengo dudas de como llamaria al otro caso de uso
-    
+            this.mostrarDatosLlamada(this.nombreCliente, this.datosLlamadaAMostrar);//aca tengo dudas de donde haria el loop de validaciones
+            
+            this.mostrarValidaciones(this.validaciones)
+            this.pantalla.solicitarDescripcionOperador()
+            this.pantalla.solicitarConfirmacionOperacion()
+
             this.finalizar();
             this.finCasoDeUso();
         }
@@ -43,7 +45,7 @@ import Estado from "../models/estado.js";
             //asigna al atributo estadoEnCurso el nombre. sino lo encuentra devuelve null
             for (const estado of estados) {
             if (estado.esEnCurso()) {
-                this.estadoLlamada= estado.nombre
+                this.estadoLlamada= estado
                 return estado;
             }
             }
@@ -57,7 +59,7 @@ import Estado from "../models/estado.js";
             return fechaActual; //retorno la fecha para ser comparada
         }
     
-        buscarValidaciones() {
+        buscarValidaciones(validaciones) {  
             return this.llamadaActual.getValidaciones();
 
         }
@@ -71,25 +73,29 @@ import Estado from "../models/estado.js";
         }
     
         mostrarDatosLlamada(nombreCliente, datosLlamada) {
-            pantalla.mostrarDatosLlamada(nombreCliente, datosLlamada)
+            this.pantalla.mostrarDatosLlamada(nombreCliente, datosLlamada)
         }    
-    
-        verificarSeleccionOpcion(validacion, seleccionOpcion) { // verificar metodo porque me parece que esta mal
-            if (!this.llamadaActual.esOpcionCorrecta(validacion, seleccionOpcion)) {
-                return 'La opcion no es correcta'
+        
+        mostrarValidaciones(validaciones) {
+            for (let validacion of validaciones) {
+                this.pantalla.mostrarValidacion(validacion, validacion.nroOrden)
+                this.pantalla.solicitarSeleccionOpcion(validacion.nombre)
             }
         }
-    
-        tomarDescripcionOperador() {
-    
+
+        verificarSeleccionOpcion(validacion, seleccionOpcion) { // verificar metodo porque me parece que esta mal
+            return this.llamadaActual.esOpcionCorrecta(validacion, seleccionOpcion)
         }
     
-        tomarAccionRequerida() {
-    
+        tomarDescripcionOperador(descripcion) {
+            this.llamadaActual.setDescripcionOperador(descripcion)
         }
     
+        // tomarAccionRequerida() {
+    
+        // }
         tomarConfirmacionOperacion() {
-    
+            this.pantalla.informarExitoRegistroAccion()
         }
         
         finalizar() {
@@ -106,11 +112,9 @@ import Estado from "../models/estado.js";
             //lo mismo que esEnCurso
             for (const estado of estados) {
                 if (estado.esFinalizado()) {
-                    this.estadoLlamada = estado.nombre
-                    return estado;
+                    this.estadoLlamada = estado
                 }
             }
-            return null;
         }
     
         obtenerDuracionLlamada(fechaFin) {
