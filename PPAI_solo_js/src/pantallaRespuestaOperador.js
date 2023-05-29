@@ -2,7 +2,7 @@ class PantallaRespuestaOperador {
   constructor() { }
 
 
-  mostrarDatosLlamada(nombre, categoria, opcion, subopcion) {
+  mostrarDatosLlamada(nombre, datos) {
     const tabla = document.getElementById("contTabla")
     const element = document.createElement("div");
     element.innerHTML = `
@@ -19,9 +19,9 @@ class PantallaRespuestaOperador {
             <tbody>
               <tr>
                 <td>${nombre}</td>
-                <td>${categoria}</td>
-                <td>${opcion}</td>
-                <td>${subopcion}</td>
+                <td>${datos.categoria}</td>
+                <td>${datos.opcion}</td>
+                <td>${datos.subopcion}</td>
               </tr>
             </tbody>
           </table>

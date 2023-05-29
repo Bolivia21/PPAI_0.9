@@ -35,8 +35,7 @@ import { mostrarPantalla,
     
             this.datosLlamadaAMostrar = this.llamadaActual.getDatosLlamada(); //hasta aca controlado perfecto
     
-            this.mostrarDatosLlamada();
-            //aca tengo dudas de donde haria el loop de validaciones
+            this.mostrarDatosLlamada(this.nombreCliente, this.datosLlamadaAMostrar);            //aca tengo dudas de donde haria el loop de validaciones
             //aca tengo dudas de como llamaria al otro caso de uso
     
             this.finalizar();
@@ -74,9 +73,9 @@ import { mostrarPantalla,
             return this.llamadaActual.getNombreCliente()
         }
     
-        mostrarDatosLlamada() {
-            PantallaRespuestaOperador.mostrarSubOpcionSeleccionada(datos.subOpcion);
-        }
+        mostrarDatosLlamada(nombreCliente, datosLlamada) {
+            pantalla.mostrarDatosLlamada(nombreCliente, datosLlamada)
+        }    
     
         verificarSeleccionOpcion(validacion, seleccionOpcion) { // verificar metodo porque me parece que esta mal
             if (!llamada.esOpcionCorrecta(validacion, seleccionOpcion)) {
@@ -122,6 +121,5 @@ import { mostrarPantalla,
         }
     
         finCasoDeUso() {
-            close()
         }
     }

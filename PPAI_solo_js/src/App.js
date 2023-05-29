@@ -1,5 +1,5 @@
 import { GestorRespuestaOperador } from "./gestor.js";
-import OpcionValidacion from "../models/opcionvalidacion.js";
+import OpcionValidacion from "../models/opcionValidacion.js";
 import PantallaRespuestaOperador from "./pantallaRespuestaOperador.js";
 import Validacion from "../models/validacion.js";
 import { Llamada } from "../models/llamada.js";
